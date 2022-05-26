@@ -43,7 +43,7 @@ int main (int ac, char **av) {
 	std::cout << std::endl;
 	if (failed) {
 		std::cout << FG_RED << "TEST FAILED !!" << FG_WHITE << std::string(" check \"diff_") +  av[1] + ".txt\"" << std::endl;
-		system(std::string("diff " + std::string(av[2]) + " " + std::string(av[3]) + " >> diff/diff_" + av[1] + ".txt").c_str());
+		system(std::string("diff " + std::string(av[2]) + " " + std::string(av[3]) + " > diff/diff_" + av[1] + ".txt").c_str());
 
 	}
 	else

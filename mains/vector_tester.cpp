@@ -523,6 +523,115 @@ int main() {
 	}
 	catch(...) {}
 
+	// test 28: get_allocator
+	try {
+		ft::vector<int> v;
+		int *p = v.get_allocator().allocate(10);
+		for (int i = 0; i < 10; i++) {
+			v.get_allocator().construct(p + i, i);
+		}
+		Test<std::string>("oui", false);
+		for (int i = 0; i < 10; i++) {
+			Test<int>(p[i], true);
+			v.get_allocator().destroy(p + i);
+		}
+		v.get_allocator().deallocate(p, 10);
+	}
+	catch(...) {}
+
+	// test 29: random access iterator
+	try {
+		ft::vector<int> v;
+
+		for (int i = 0; i < 100; i++) {
+			v.push_back(i);
+		}
+		ft::vector<int>::iterator endo = v.end();
+		endo--;
+		Test<int>(*endo, false);
+		endo++;
+		for (ft::vector<int>::iterator it = v.begin(); it != endo; it++) {
+			Test<int>(*it, true);
+			*it = *it + 1;
+		}
+		for (size_t i = 0; i < v.size(); i++) {
+			Test<int>(v[i], true);
+		}
+		ft::vector<int>::iterator begindo = v.begin();
+		Test<int>(*(begindo + 50), true);
+		Test<int>(*(endo - 50), true);
+	}
+	catch(...) {}
+
+	// test 30: const_iterator
+	try {
+		ft::vector<int> v;
+
+		for (int i = 0; i < 100; i++) {
+			v.push_back(i);
+		}
+		ft::vector<int>::const_iterator endo = v.end();
+		endo--;
+		Test<int>(*endo, false);
+		endo++;
+		for (ft::vector<int>::const_iterator it = v.begin(); it != endo; it++) {
+			Test<int>(*it, true);
+		}
+		for (size_t i = 0; i < v.size(); i++) {
+			Test<int>(v[i], true);
+		}
+		ft::vector<int>::const_iterator begindo = v.begin();
+		Test<int>(*(begindo + 50), true);
+		Test<int>(*(endo - 50), true);
+	}
+	catch(...) {}
+
+	// test 31: reverse iterator
+	try {
+		ft::vector<int> v;
+
+		for (int i = 0; i < 100; i++) {
+			v.push_back(i);
+		}
+		ft::vector<int>::reverse_iterator rendo = v.rend();
+		rendo--;
+		Test<int>(*rendo, false);
+		rendo++;
+		for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != rendo; it++) {
+			Test<int>(*it, true);
+		}
+		for (size_t i = 0; i < v.size(); i++) {
+			Test<int>(v[i], true);
+		}
+		ft::vector<int>::reverse_iterator rbegindo = v.rbegin();
+		Test<int>(*(rbegindo + 50), true);
+		Test<int>(*(rendo - 50), true);
+	}
+	catch(...) {}
+
+	// test 32: const_reverse iterator
+	try {
+		ft::vector<int> v;
+
+		for (int i = 0; i < 100; i++) {
+			v.push_back(i);
+		}
+		ft::vector<int>::const_reverse_iterator rendo = v.rend();
+		rendo--;
+		Test<int>(*rendo, false);
+		rendo++;
+		for (ft::vector<int>::const_reverse_iterator it = v.rbegin(); it != rendo; it++) {
+			Test<int>(*it, true);
+		}
+		for (size_t i = 0; i < v.size(); i++) {
+			Test<int>(v[i], true);
+		}
+		ft::vector<int>::const_reverse_iterator rbegindo = v.rbegin();
+		Test<int>(*(rbegindo + 50), true);
+		Test<int>(*(rendo - 50), true);
+	}
+	catch(...) {}
+
 	ofs.close();
 
 	// gettimeofday(&time_now, NULL);

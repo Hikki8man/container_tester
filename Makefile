@@ -56,9 +56,7 @@ clean	:
 	rm -f $(VEC_OBJ) $(STACK_OBJ) $(CHECKER_OBJ)
 
 fclean	:	clean
-	rm -rf exe
-	rm -rf diff
-	rm -rf testOutput
+	rm -rf exe diff testOutput make_errors
 
 re		:	fclean all
 

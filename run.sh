@@ -15,6 +15,8 @@ fi
 
 invalid=()
 
+make -s fclean
+
 #compile specified tests
 mkdir -p make_errors
 echo "${cyan}Compiling tests...${reset}"

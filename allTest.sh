@@ -8,6 +8,12 @@ reset=`tput sgr0`
 
 echo "${cyan}Compiling test...${reset}"
 make -s re
+if [ $? -eq 0 ]; then
+	echo "${green}Compilation successful!${reset}"
+else
+	echo "${red}Compilation failed!${reset}"
+	exit 1
+fi
 make -s clean
 #testing stack
 ./exe/ft_stack && ./exe/std_stack

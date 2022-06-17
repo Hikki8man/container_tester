@@ -14,21 +14,25 @@ VEC_SRC =	./mains/vector_tester.cpp
 
 VEC_OBJ =	$(VEC_SRC:.cpp=.o)
 
+MAP_STD	=	std_map
+
+MAP_FT	=	ft_map
+
+MAP_SRC =	./mains/map_tester.cpp
+
+MAP_OBJ =	$(MAP_SRC:.cpp=.o)
+
 CHECKER = checker
 
 CHECKER_SRC = ./utils/checker.cpp
 
 CHECKER_OBJ = $(CHECKER_SRC:.cpp=.o)
 
-TESTOUT = ./testOutput/
-
-TESTPATH = mains/
-
 CFLAGS	=   #-Wall -Werror -Wextra
 
 CC		=	c++
 
-all		:	dir vector stack checker
+all		:	dir vector stack map checker
 
 dir :
 	mkdir -p exe
@@ -46,6 +50,12 @@ vector: $(VEC_OBJ) dir checker
 	$(CC) $(CFLAGS) -o exe/$(VEC_STD) $(VEC_OBJ)
 	$(CC) $(CFLAGS) -D FT -c $(VEC_SRC) -o $(VEC_OBJ)
 	$(CC) $(CFLAGS) -o exe/$(VEC_FT) $(VEC_OBJ)
+
+map: $(VEC_OBJ) dir checker
+	$(CC) $(CFLAGS) -D STD -c $(MAP_SRC) -o $(MAP_OBJ)
+	$(CC) $(CFLAGS) -o exe/$(MAP_STD) $(MAP_OBJ)
+	$(CC) $(CFLAGS) -D FT -c $(MAP_SRC) -o $(MAP_OBJ)
+	$(CC) $(CFLAGS) -o exe/$(MAP_FT) $(MAP_OBJ)
 
 
 checker : $(CHECKER_OBJ)

@@ -1,0 +1,4 @@
+MAP TEST
+Test 1: it != test.end() it2 != test.end() it3 == test.end()
+Test 2: 15 0 -1
+Test 3: c

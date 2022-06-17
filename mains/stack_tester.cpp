@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <deque>
 #include <list>
 #include <fstream>
 
@@ -23,7 +22,6 @@ int main (void) {
 	{
 		ofs << "STACK TEST" << std::endl;
 		ft::stack<int> a;
-
 		// Test 1
 		Test<bool>(a.empty(), false);
 		// Test 2
@@ -38,7 +36,7 @@ int main (void) {
 		for (int i = 0; i < 10; ++i) {
 			a.push(i);
 		}
-		Test<size_t>(a.size(), false);
+		 Test<size_t>(a.size(), false);
 		// Test 6
 		Test<int>(a.top(), false);
 		// Test 7

@@ -40,3 +40,16 @@ if command -v leaks > /dev/null; then
 		echo "${red}Leaks detected !!${reset}"
 	fi
 fi
+
+#testing map
+./exe/ft_map && ./exe/std_map
+./exe/checker Map ./testOutput/ft_map_out.txt ./testOutput/std_map_out.txt
+if command -v leaks > /dev/null; then
+	echo "${cyan}Testing leaks: ${reset}"
+	leaks -q -atExit -- ./exe/ft_map > /dev/null 2> /dev/null
+	if [ $? -eq 0 ]; then
+		echo "${green}No leaks detected :)${reset}"
+	else
+		echo "${red}Leaks detected !!${reset}"
+	fi
+fi

@@ -51,7 +51,7 @@ vector: $(VEC_OBJ) dir checker
 	$(CC) $(CFLAGS) -D FT -c $(VEC_SRC) -o $(VEC_OBJ)
 	$(CC) $(CFLAGS) -o exe/$(VEC_FT) $(VEC_OBJ)
 
-map: $(VEC_OBJ) dir checker
+map: $(MAP_OBJ) dir checker
 	$(CC) $(CFLAGS) -D STD -c $(MAP_SRC) -o $(MAP_OBJ)
 	$(CC) $(CFLAGS) -o exe/$(MAP_STD) $(MAP_OBJ)
 	$(CC) $(CFLAGS) -D FT -c $(MAP_SRC) -o $(MAP_OBJ)
@@ -63,11 +63,11 @@ checker : $(CHECKER_OBJ)
 	$(CC) $(CFLAGS) -o exe/$(CHECKER) $(CHECKER_OBJ)
 
 clean	:
-	rm -f $(VEC_OBJ) $(STACK_OBJ) $(CHECKER_OBJ)
+	rm -f $(VEC_OBJ) $(STACK_OBJ) $(CHECKER_OBJ) $(MAP_OBJ)
 
 fclean	:	clean
 	rm -rf exe diff testOutput make_errors
 
 re		:	fclean all
 
-.phony	:	re clean fclean .c.o checker stack vector
+.phony	:	re clean fclean .c.o checker stack vector map

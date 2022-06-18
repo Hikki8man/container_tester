@@ -9,7 +9,7 @@
 	namespace ft = std;
 	std::ofstream ofs("testOutput/std_map_out.txt");
 #else
-	#include "../../Becoterie/map.hpp" // include your stack header file
+	#include "../..//map.hpp" // include your stack header file
 	std::ofstream ofs("testOutput/ft_map_out.txt");
 
 #endif
@@ -76,15 +76,24 @@ int main() {
 		Test<int>(test.max_size(), true);
 	} catch (...) {}
 
-	// Test 3 - upper / lower bound
+	// // Test 3 - upper / lower bound
+
+	// try {
+	// 	// upper_bound
+	// 	ft::map<std::string, int>::iterator it = test.upper_bound("a");
+	// 	Test<std::string>((*it).first, false);
+
+	// 	// lower_bound
+	// 	ft::map<std::string, int>::iterator it2 = test.lower_bound("a");
+	// 	Test<std::string>((*it2).first, true);
+	// } catch (...) {}
+
+	// Test 3 - insert
 
 	try {
-		// upper_bound
-		ft::map<std::string, int>::iterator it = test.upper_bound("a");
-		Test<std::string>((*it).first, false);
+		ft::map<int, char>m;
 
-		// lower_bound
-		ft::map<std::string, int>::iterator it2 = test.lower_bound("a");
-		Test<std::string>((*it2).first, true);
-	} catch (...) {}
+
+	}
+	catch (...) {}
 }

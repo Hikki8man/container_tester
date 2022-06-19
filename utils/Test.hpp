@@ -10,7 +10,7 @@ extern int nb;
 template <typename T>
 class Test {
 	public:
-		Test(T a, bool sameTest) {
+		Test(const T& a, bool sameTest = true) {
 			if (sameTest == false) {
 				ofs << std::endl;
 				ofs << "Test " << nb << ": " << a;

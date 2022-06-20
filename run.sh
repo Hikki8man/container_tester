@@ -6,7 +6,7 @@ yellow=`tput setaf 3`
 cyan=`tput setaf 6`
 reset=`tput sgr0`
 #containers=(vector stack map)
-containers=(vector stack)
+containers=(vector stack map)
 
 #if arguments are specified, only run those tests (e.g. ./run.sh vector)
 if [ $# -ne 0 ]; then

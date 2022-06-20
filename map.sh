@@ -7,7 +7,7 @@ cyan=`tput setaf 6`
 reset=`tput sgr0`
 
 echo "${cyan}Compiling test...${reset}"
-make -s stack
+make -s map
 make -s clean
 #testing stack
 ./exe/ft_map && ./exe/std_map

@@ -53,61 +53,48 @@ void basic_map(ft::map<int, char>& map) {
 }
 
 int main() {
+	typedef ft::map<int, char>::iterator iterator;
+	typedef ft::map<int, char>::const_iterator const_iterator;
+
 	std::signal(SIGSEGV, &segfault_handler);
 
 	srand(time(NULL));
 
 	ofs << "MAP TEST";
-	ft::map<std::string, int>	test;
 
+	// Test 1 - Constructors
 	try {
-		test.insert(ft::pair<std::string, int>("m", 1));
-		test.insert(ft::pair<std::string, int>("f", 2));
-		test.insert(ft::pair<std::string, int>("c", 4));
-		test.insert(ft::pair<std::string, int>("d", 4));
-		test.insert(ft::pair<std::string, int>("e", 4));
-		test.insert(ft::pair<std::string, int>("u", 4));
-		test.insert(ft::pair<std::string, int>("p", 4));
-		test.insert(ft::pair<std::string, int>("l", 4));
-		test.insert(ft::pair<std::string, int>("a", 4));
-		test.insert(ft::pair<std::string, int>("g", 4));
-		test.insert(ft::pair<std::string, int>("n", 4));
-		test.insert(ft::pair<std::string, int>("o", 4));
-		test.insert(ft::pair<std::string, int>("q", 4));
-		test.insert(ft::pair<std::string, int>("r", 4));
-		test.insert(ft::pair<std::string, int>("s", 4));
-	} catch (...) {}
+		ft::map<int, char> m;
+		Test<size_t>(m.size());
+		Test<bool>(m.empty(), false);
 
-	// Test 1 - find
-	try {
-		// Find dans une map vide | c'est pas vide zebi
-		ft::map<std::string, int>::iterator it = test.find("a");
-		Test<std::string>(it != test.end() ? "it != test.end()" : "it == test.end()", false);
-
-		// Find un element qui existe
-		ft::map<std::string, int>::iterator it2 = test.find("a");
-		Test<std::string>(it2 != test.end() ? "it2 != test.end()" : "it2 == test.end()", true);
-
-		// Find un element qui existe pas
-		ft::map<std::string, int>::iterator it3 = test.find("z");
-		Test<std::string>(it3 != test.end() ? "it3 != test.end()" : "it3 == test.end()", true);
+		basic_map(m);
+		// By copy
+		ft::map<int, char> m2(m);
+		for (const_iterator it = m.begin(); it != m.end(); ++it) {
+			Test<int>(it->first);
+		}
+		// By range iterator
+		ft::map<int, char> m3(m2.begin(), m2.end());
+		for (const_iterator it = m.begin(); it != m.end(); ++it) {
+			Test<int>(it->first);
+		}
 	} catch(...) {}
 
 	// Test 2 - capacity
 	try {
+		ft::map<int, char> m;
+
+		basic_map(m);
 		// size
-		Test<int>(test.size(), false);
+		Test<size_t>(m.size(), false);
 
 		// empty
-		Test<bool>(test.empty(), true);
+		Test<bool>(m.empty(), true);
 
 		// max_size
-		Test<int>(test.max_size(), true);
+		Test<size_t>(m.max_size(), true);
 	} catch (...) {}
-
-	typedef ft::map<int, char>::iterator iterator;
-	typedef ft::map<int, char>::const_iterator const_iterator;
-
 
 	// Test 3 - insert single element
 	try {
@@ -190,17 +177,22 @@ int main() {
 		it = m.find(11);
 		if (it != m.end()) { Test<int>(it->first); }
 		else { Test<std::string>("not found"); }
+		const_iterator cit = m.find(4);
+		if (cit != m.end()) { Test<int>(cit->first); }
+		else { Test<std::string>("not found"); }
 	}
 	catch (...) {}
 
 	// Test 7 - erase - Key
 	try {
 		ft::map<int, char>m;
+		size_t e = m.erase(117);
+		Test<size_t>(e, false);
 		basic_map(m);
 		m.insert(ft::make_pair(12, 'a'));
 		// erase a node with no childrens
 		size_t s = m.erase(12);
-		Test<size_t>(s, false);
+		Test<size_t>(s, true);
 		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);
 		}
@@ -337,6 +329,15 @@ int main() {
 		for (iterator it = m2.begin(); it != m2.end(); it++) {
 			Test<int>(it->first);
 		}
+
+		// swap non member
+		ft::swap(m, m2);
+		for (iterator it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
+		for (iterator it = m2.begin(); it != m2.end(); it++) {
+			Test<int>(it->first);
+		}
 	}
 	catch (...) {}
 
@@ -451,6 +452,75 @@ int main() {
 		Test<int>(e.second->first);
 	}
 	catch (...) {}
+
+	// Test 16 - Operator[]
+	try {
+		ft::map<int, char>m;
+		char &a = m[12];
+		m.size();
+		Test<int>(m.begin()->first, false);
+		a = 'g';
+		Test<char>(m.begin()->second);
+		m[1];
+		m[0];
+		m[124];
+		m[0];
+		Test<size_t>(m.size());
+		for (iterator it = m.begin(); it != m.end(); ++it) {
+			Test<int>(it->first);
+		}
+	}
+	catch(...) {}
+
+	// Test 17 - At
+	try {
+		ft::map<int, char>m;
+		basic_map(m);
+		char& c = m.at(13);
+		c = 'v';
+		for (iterator it = m.begin(); it != m.end(); ++it) {
+			Test<char>(m.at(it->first));
+		}
+		m.at(12);
+	}
+	catch (std::out_of_range) { Test<std::string>("Out of Range Exeception"); }
+	catch(...) {}
+
+	// Test 18 - Compare operator
+	try {
+		ft::map<int, char> m;
+		basic_map(m);
+		ft::map<int, char> m2(m);
+
+		Test<bool>(m == m2, false);
+		Test<bool>(m != m2);
+		m.insert(ft::make_pair(1, 'w'));
+		Test<bool>(m < m2);
+		Test<bool>(m <= m2);
+		Test<bool>(m > m2);
+		Test<bool>(m >= m2);
+
+	}
+	catch (...) {}
+
+	// Test 19 - Iterator
+	try {
+		ft::map<int, char>m;
+		basic_map(m);
+		iterator it = m.begin();
+		it->second = 'q';
+		Test<char>(it->second, false);
+		
+		// Reverse
+		for (ft::map<int, char>::reverse_iterator rit = m.rbegin(); rit != m.rend(); ++rit) {
+			Test<int>(rit->first);
+			rit->second = 'e';
+		}
+		for (ft::map<int, char>::const_reverse_iterator rit = m.rbegin(); rit != m.rend(); ++rit) {
+			Test<int>(rit->second);
+		}
+	}
+	catch(...) {}
 
 	ofs.close();
 

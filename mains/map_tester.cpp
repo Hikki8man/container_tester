@@ -106,6 +106,7 @@ int main() {
 	} catch (...) {}
 
 	typedef ft::map<int, char>::iterator iterator;
+	typedef ft::map<int, char>::const_iterator const_iterator;
 
 
 	// Test 3 - insert single element
@@ -281,177 +282,175 @@ int main() {
 		}
 		Test<bool>(m.empty());
 		Test<size_t>(m.size());
-		// erase key that doesn't exist
-		basic_map(m);
-		std::cout << "size: " << m.size() << std::endl;
-		it = m.find(100);
-		m.erase(it);
-		it = m.find(11);
-		m.erase(it);
-		it = m.begin();
-		if (it != m.end()) {
-			std::cout << "first key: " << it->first << std::endl;
-		}
-		else {
-			std::cout << "first key: not found" << std::endl;
-		}
-		// for (iterator it = m.begin(); it != m.end(); it++) {
-		// 	Test<int>(it->first);
-		// }
+
 	}
 	catch (...) {}
 
-	// // Test 9 - erase - range
-	// try {
-	// 	ft::map<int, char>m;
-	// 	basic_map(m);
-	// 	m.erase(m.begin(), m.end());
-	// 	Test<size_t>(m.size(), false);
-	// 	Test<bool>(m.empty());
-	// 	for (iterator it = m.begin(); it != m.end(); it++) {
-	// 		Test<int>(it->first);
-	// 	}
-	// 	basic_map(m);
-	// 	iterator it = m.find(4);
-	// 	iterator ite = m.find(13);
-	// 	m.erase(it, ite);
-	// 	for (iterator it = m.begin(); it != m.end(); it++) {
-	// 		Test<int>(it->first);
-	// 	}
-	// }
-	// catch (...) {}
+	// Test 9 - erase - range
+	try {
+		ft::map<int, char>m;
+		basic_map(m);
+		m.erase(m.begin(), m.end());
+		Test<size_t>(m.size(), false);
+		Test<bool>(m.empty());
+		for (iterator it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
+		basic_map(m);
+		iterator it = m.find(4);
+		iterator ite = m.find(13);
+		m.erase(it, ite);
+		for (iterator it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
+	}
+	catch (...) {}
 
-	// // Test 10 - clear
-	// try {
-	// 	ft::map<int, char>m;
-	// 	m.clear();
-	// 	basic_map(m);
-	// 	m.clear();
-	// 	Test<size_t>(m.size(), false);
-	// 	Test<bool>(m.empty());
-	// 	for (iterator it = m.begin(); it != m.end(); it++) {
-	// 		Test<int>(it->first);
-	// 	}
-	// }
-	// catch (...) {}
+	// Test 10 - clear
+	try {
+		ft::map<int, char>m;
+		m.clear();
+		basic_map(m);
+		m.clear();
+		Test<size_t>(m.size(), false);
+		Test<bool>(m.empty());
+		for (iterator it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
+	}
+	catch (...) {}
 
-	// // Test 11 - swap
-	// try {
-	// 	ft::map<int, char>m;
-	// 	basic_map(m);
-	// 	ft::map<int, char>m2;
-	// 	for (int i = 0; i < 40; i++) {
-	// 		m2.insert(ft::make_pair(rand(), 'a'));
-	// 	}
-	// 	m.swap(m2);
-	// 	Test<size_t>(m.size(), false);
-	// 	Test<size_t>(m2.size());
-	// 	for (iterator it = m.begin(); it != m.end(); it++) {
-	// 		Test<int>(it->first);
-	// 	}
-	// 	for (iterator it = m2.begin(); it != m2.end(); it++) {
-	// 		Test<int>(it->first);
-	// 	}
-	// }
-	// catch (...) {}
+	// Test 11 - swap
+	try {
+		ft::map<int, char>m;
+		basic_map(m);
+		ft::map<int, char>m2;
+		for (int i = 0; i < 40; i++) {
+			m2.insert(ft::make_pair(rand(), 'a'));
+		}
+		m.swap(m2);
+		Test<size_t>(m.size(), false);
+		Test<size_t>(m2.size());
+		for (iterator it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
+		for (iterator it = m2.begin(); it != m2.end(); it++) {
+			Test<int>(it->first);
+		}
+	}
+	catch (...) {}
 
-	// // Test 12 - count
-	// try {
-	// 	ft::map<int, char>m;
-	// 	Test<size_t>(m.count(0), false);
-	// 	basic_map(m);
-	// 	Test<size_t>(m.count(4));
-	// 	Test<size_t>(m.count(5));
-	// 	Test<size_t>(m.count(100));
-	// 	Test<size_t>(m.count(0));
-	// }
-	// catch (...) {}
+	// Test 12 - count
+	try {
+		ft::map<int, char>m;
+		Test<size_t>(m.count(0), false);
+		basic_map(m);
+		Test<size_t>(m.count(4));
+		Test<size_t>(m.count(5));
+		Test<size_t>(m.count(100));
+		Test<size_t>(m.count(0));
+	}
+	catch (...) {}
 
-	// // Test 13 - lower_bound
-	// try {
-	// 	ft::map<int, char>m;
-	// 	iterator it = m.lower_bound(0);
-	// 	Test<bool>(it == m.end(), false);
-	// 	basic_map(m);
-	// 	it = m.lower_bound(0);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.lower_bound(4);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.lower_bound(5);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.lower_bound(9);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.lower_bound(13);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.lower_bound(14);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.lower_bound(100);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// }
-	// catch (...) {}
+	// Test 13 - lower_bound
+	try {
+		ft::map<int, char>m;
+		iterator it = m.lower_bound(0);
+		Test<bool>(it == m.end(), false);
+		basic_map(m);
+		it = m.lower_bound(0);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.lower_bound(4);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.lower_bound(5);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.lower_bound(9);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.lower_bound(13);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.lower_bound(14);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.lower_bound(100);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
 
-	// // Test 14 - upper_bound
-	// try {
-	// 	ft::map<int, char>m;
-	// 	iterator it = m.upper_bound(0);
-	// 	Test<bool>(it == m.end(), false);
-	// 	basic_map(m);
-	// 	it = m.upper_bound(0);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.upper_bound(4);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.upper_bound(5);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.upper_bound(9);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.upper_bound(13);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.upper_bound(14);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// 	it = m.upper_bound(100);
-	// 	if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
-	// }
-	// catch (...) {}
+		const_iterator cit = m.lower_bound(0);
+		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
+		cit = m.lower_bound(4);
+		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
+	}
+	catch (...) {}
 
-	// // Test 15 - equal_range //todo const one
-	// try {
-	// 	ft::map<int, char>m;
-	// 	basic_map(m);
-	// 	ft::pair<iterator, iterator> p = m.equal_range(4);
-	// 	Test<int>(p.first->first, false);
-	// 	Test<int>(p.second->first);
-	// 	p = m.equal_range(8);
-	// 	Test<int>(p.first->first);
-	// 	Test<int>(p.second->first);
-	// 	p = m.equal_range(14);
-	// 	if (p.first != m.end())
-	// 		Test<int>(p.first->first);
-	// 	else
-	// 		Test<std::string>("p.first == m.end()");
-	// 	if (p.second != m.end())
-	// 		Test<int>(p.first->first);
-	// 	else
-	// 		Test<std::string>("p.second == m.end()");
-	// 	p = m.equal_range(100);
-	// 	if (p.first != m.end())
-	// 		Test<int>(p.first->first);
-	// 	else
-	// 		Test<std::string>("p.first == m.end()");
-	// 	if (p.second != m.end())
-	// 		Test<int>(p.first->first);
-	// 	else
-	// 		Test<std::string>("p.second == m.end()");
-	// 	p = m.equal_range(0);
-	// 	if (p.first != m.end())
-	// 		Test<int>(p.first->first);
-	// 	else
-	// 		Test<std::string>("p.first == m.end()");
-	// 	if (p.second != m.end())
-	// 		Test<int>(p.first->first);
-	// 	else
-	// 		Test<std::string>("p.second == m.end()");
-	// }
-	// catch (...) {}
+	// Test 14 - upper_bound
+	try {
+		ft::map<int, char>m;
+		iterator it = m.upper_bound(0);
+		Test<bool>(it == m.end(), false);
+		basic_map(m);
+		it = m.upper_bound(0);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.upper_bound(4);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.upper_bound(5);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.upper_bound(9);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.upper_bound(13);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.upper_bound(14);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		it = m.upper_bound(100);
+		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+
+		const_iterator cit = m.upper_bound(0);
+		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
+		cit = m.upper_bound(4);
+		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
+	}
+	catch (...) {}
+
+	// Test 15 - equal_range
+	try {
+		ft::map<int, char>m;
+		basic_map(m);
+		ft::pair<iterator, iterator> p = m.equal_range(4);
+		Test<int>(p.first->first, false);
+		Test<int>(p.second->first);
+		p = m.equal_range(8);
+		Test<int>(p.first->first);
+		Test<int>(p.second->first);
+		p = m.equal_range(14);
+		if (p.first != m.end())
+			Test<int>(p.first->first);
+		else
+			Test<std::string>("p.first == m.end()");
+		if (p.second != m.end())
+			Test<int>(p.first->first);
+		else
+			Test<std::string>("p.second == m.end()");
+		p = m.equal_range(100);
+		if (p.first != m.end())
+			Test<int>(p.first->first);
+		else
+			Test<std::string>("p.first == m.end()");
+		if (p.second != m.end())
+			Test<int>(p.first->first);
+		else
+			Test<std::string>("p.second == m.end()");
+		p = m.equal_range(0);
+		if (p.first != m.end())
+			Test<int>(p.first->first);
+		else
+			Test<std::string>("p.first == m.end()");
+		if (p.second != m.end())
+			Test<int>(p.first->first);
+		else
+			Test<std::string>("p.second == m.end()");
+
+		ft::pair<const_iterator, const_iterator> e = m.equal_range(4);
+		Test<int>(e.first->first);
+		Test<int>(e.second->first);
+	}
+	catch (...) {}
 
 	ofs.close();
 

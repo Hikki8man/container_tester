@@ -239,6 +239,7 @@ int main() {
 		m.insert(ft::make_pair(12, 'a'));
 		// erase a node with no childrens
 		iterator it = m.find(12);
+		Test<int>(it->first, false);
 		m.erase(it);
 		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);
@@ -477,6 +478,7 @@ int main() {
 		ft::map<int, char>m;
 		basic_map(m);
 		char& c = m.at(13);
+		Test<char>(c, false);
 		c = 'v';
 		for (iterator it = m.begin(); it != m.end(); ++it) {
 			Test<char>(m.at(it->first));
@@ -525,12 +527,12 @@ int main() {
 	// Test 20 - THICC MAP
 	try {
 		ft::map<int, char>m;
-
+		Test<bool>(m.empty(), false);
 		for (int i = 0; i <= 1000000; ++i) {
 			m.insert(ft::make_pair(i, 'a'));
 		}
 		iterator it = m.find(1000000);
-		if (it != m.end()) { Test<int>(it->first, false); }
+		if (it != m.end()) { Test<int>(it->first); }
 		else { Test<std::string>("Not found"); }
 
 		it = m.upper_bound(2000000);

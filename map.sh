@@ -9,7 +9,7 @@ reset=`tput sgr0`
 echo "${cyan}Compiling test...${reset}"
 make -s map
 make -s clean
-#testing stack
+#testing Map
 ./exe/ft_map && ./exe/std_map
 ./exe/checker Map ./testOutput/ft_map_out.txt ./testOutput/std_map_out.txt
 if command -v leaks > /dev/null; then

@@ -522,6 +522,27 @@ int main() {
 	}
 	catch(...) {}
 
+	// Test 20 - THICC MAP
+	try {
+		ft::map<int, char>m;
+
+		for (int i = 0; i <= 1000000; ++i) {
+			m.insert(ft::make_pair(i, 'a'));
+		}
+		iterator it = m.find(1000000);
+		if (it != m.end()) { Test<int>(it->first, false); }
+		else { Test<std::string>("Not found"); }
+
+		it = m.upper_bound(2000000);
+		if (it != m.end()) { Test<int>(it->first, false); }
+		else { Test<std::string>("Not found"); }
+
+		Test<size_t>(m.size());
+		m.clear();
+		Test<bool>(m.empty());
+	}
+	catch(...) {}
+
 	ofs.close();
 
 	return 0;

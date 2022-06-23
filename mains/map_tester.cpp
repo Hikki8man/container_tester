@@ -22,9 +22,16 @@ int nb = 1;
 
 void segfault_handler(int sig) {
 	(void)sig;
-	Test<std::string>("SEGFAULT", false);
+	Test<std::string>("SEGFAULT");
 	throw std::runtime_error("SEGFAULT");
 }
+
+template<class _Tp>
+	struct sup
+	{
+		bool operator()(const _Tp& __x, const _Tp& __y) const
+      	{ return __x > __y; }
+	};
 
 void basic_map(ft::map<int, char>& map) {
 	try {
@@ -58,7 +65,11 @@ int main() {
 
 	std::signal(SIGSEGV, &segfault_handler);
 
-	srand(time(NULL));
+	clock_t start_test;
+	clock_t time_test;
+	srand(0);
+	start_test = clock();
+
 
 	ofs << "MAP TEST";
 
@@ -296,12 +307,12 @@ int main() {
 			Test<int>(it->first);
 		}
 		basic_map(m);
-		iterator it = m.find(4);
-		iterator ite = m.find(13);
-		m.erase(it, ite);
-		for (iterator it = m.begin(); it != m.end(); it++) {
-			Test<int>(it->first);
-		}
+		// iterator it = m.find(4);
+		// iterator ite = m.find(13);
+		// m.erase(it, ite);
+		// for (iterator it = m.begin(); it != m.end(); it++) {
+		// 	Test<int>(it->first);
+		// }
 	}
 	catch (...) {}
 
@@ -496,9 +507,18 @@ int main() {
 
 	// Test 18 - Compare operator
 	try {
-		ft::map<int, char> m;
-		basic_map(m);
-		ft::map<int, char> m2(m);
+		ft::map<int, char, sup<int> > m;
+		m.insert(ft::make_pair(8, 'a'));
+		m.insert(ft::make_pair(10, 'b'));
+		m.insert(ft::make_pair(3, 'c'));
+		m.insert(ft::make_pair(1, 'd'));
+		m.insert(ft::make_pair(6, 'e'));
+		m.insert(ft::make_pair(4, 'f'));
+		m.insert(ft::make_pair(7, 'g'));
+		m.insert(ft::make_pair(14, 'h'));
+		m.insert(ft::make_pair(13, 'i'));
+
+		ft::map<int, char, sup<int> > m2(m);
 
 		Test<bool>(m == m2, false);
 		Test<bool>(m != m2);
@@ -550,6 +570,11 @@ int main() {
 		Test<bool>(m.empty());
 	}
 	catch(...) {}
+
+	time_test = clock() - start_test;
+	float time_f;
+	time_f = ((float)time_test)/CLOCKS_PER_SEC;
+  	std::cout << "Time: " << time_f << " sec (" << time_test << " CT.)" << std::endl;
 
 	ofs.close();
 

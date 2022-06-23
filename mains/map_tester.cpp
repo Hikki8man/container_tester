@@ -116,8 +116,11 @@ int main() {
 		Test<bool>(p2.second, true);
 		Test<size_t>(m.size(), true);
 
-		for (int i = 0; i < 50; i++) {
-			m.insert(ft::make_pair(rand() % 10000, 'b'));
+		for (int i = 1; i < 50; i++) {
+			if (i % 2)
+				m.insert(ft::make_pair(i + 10, 'b'));
+			else
+				m.insert(ft::make_pair(i - 10, 'b'));
 		}
 		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first, true);
@@ -147,8 +150,11 @@ int main() {
 		ft::map<int, char>m;
 		basic_map(m);
 		ft::map<int, char>m2;
-		for (int i = 0; i < 50; i++) {
-			m2.insert(ft::make_pair(rand() % 10000, 'b'));
+		for (int i = 1; i < 50; i++) {
+			if (i % 2)
+				m2.insert(ft::make_pair(i + 10, 'b'));
+			else
+				m2.insert(ft::make_pair(i - 10, 'b'));
 		}
 		m.insert(m2.begin(), m2.end());
 		Test<size_t>(m.size(), false);
@@ -319,7 +325,7 @@ int main() {
 		basic_map(m);
 		ft::map<int, char>m2;
 		for (int i = 0; i < 40; i++) {
-			m2.insert(ft::make_pair(rand(), 'a'));
+			m2.insert(ft::make_pair(i, 'a'));
 		}
 		m.swap(m2);
 		Test<size_t>(m.size(), false);

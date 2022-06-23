@@ -104,6 +104,13 @@ int main (void) {
 		Test<bool>(a.top() <= c.top(), false);
 		// Test 28
 		Test<bool>(a.top() >= c.top(), false);
+		// Test 29
+		Test<bool>(a < c, false);
+		Test<bool>(a <= c);
+		Test<bool>(a > c);
+		Test<bool>(a >= c);
+		Test<bool>(a == c);
+		Test<bool>(a != c);
 	}
 	ofs.close();
 }

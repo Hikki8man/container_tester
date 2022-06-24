@@ -143,12 +143,15 @@ int main() {
 	try {
 		ft::map<int, char>m;
 		basic_map(m);
-		iterator it = m.insert(m.begin(), ft::make_pair(0, 'a'));
+		iterator it = m.insert(m.begin(), ft::make_pair(15, 'a'));
 		Test<int>(it->first, false);
 		Test<bool>(it != m.begin(), true);
 		it = m.insert(m.end(), ft::make_pair(100, 'a'));
 		Test<bool>(it != m.end(), true);
 		m.insert(m.end(), ft::make_pair(2, 'a'));
+		m.insert(m.find(14), ft::make_pair(0, 'd'));
+		m.insert(m.find(3), ft::make_pair(13, 'd'));
+		m.insert(m.find(3), ft::make_pair(13, 'd'));
 		for (it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first, true);
 		}
@@ -307,12 +310,12 @@ int main() {
 			Test<int>(it->first);
 		}
 		basic_map(m);
-		// iterator it = m.find(4);
-		// iterator ite = m.find(13);
-		// m.erase(it, ite);
-		// for (iterator it = m.begin(); it != m.end(); it++) {
-		// 	Test<int>(it->first);
-		// }
+		iterator it = m.find(4);
+		iterator ite = m.find(13);
+		m.erase(it, ite);
+		for (iterator it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
 	}
 	catch (...) {}
 
@@ -561,6 +564,8 @@ int main() {
 		if (it != m.end()) { Test<int>(it->first); }
 		else { Test<std::string>("Not found"); }
 
+		m.find(500000);
+
 		it = m.upper_bound(2000000);
 		if (it != m.end()) { Test<int>(it->first, false); }
 		else { Test<std::string>("Not found"); }
@@ -571,10 +576,10 @@ int main() {
 	}
 	catch(...) {}
 
-	time_test = clock() - start_test;
-	float time_f;
-	time_f = ((float)time_test)/CLOCKS_PER_SEC;
-  	std::cout << "Time: " << time_f << " sec (" << time_test << " CT.)" << std::endl;
+	// time_test = clock() - start_test;
+	// float time_f;
+	// time_f = ((float)time_test)/CLOCKS_PER_SEC;
+  	// std::cout << "Time: " << time_f << " sec (" << time_test << " CT.)" << std::endl;
 
 	ofs.close();
 

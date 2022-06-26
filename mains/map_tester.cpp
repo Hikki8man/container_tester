@@ -76,8 +76,8 @@ int main() {
 	// Test 1 - Constructors
 	try {
 		ft::map<int, char> m;
-		Test<size_t>(m.size());
 		Test<bool>(m.empty(), false);
+		Test<size_t>(m.size());
 
 		basic_map(m);
 		// By copy
@@ -101,10 +101,10 @@ int main() {
 		Test<size_t>(m.size(), false);
 
 		// empty
-		Test<bool>(m.empty(), true);
+		Test<bool>(m.empty());
 
 		// max_size
-		Test<size_t>(m.max_size(), true);
+		Test<size_t>(m.max_size());
 	} catch (...) {}
 
 	// Test 3 - insert single element
@@ -115,17 +115,17 @@ int main() {
 
 		ft::pair<iterator, bool> p = m.insert(ft::make_pair(1, 'a'));
 		Test<int>(p.first->first, false);
-		Test<char>(p.first->second, true);
-		Test<bool>(p.second, true);
-		Test<size_t>(m.size(), true);
-		Test<bool>(m.empty(), true);
+		Test<char>(p.first->second);
+		Test<bool>(p.second);
+		Test<size_t>(m.size());
+		Test<bool>(m.empty());
 
 		// inserting a new element with a key that already exists
 		ft::pair<iterator, bool> p2 = m.insert(ft::make_pair(1, 'b'));
 
-		Test<bool>(p2 != p, true);
-		Test<bool>(p2.second, true);
-		Test<size_t>(m.size(), true);
+		Test<bool>(p2 != p);
+		Test<bool>(p2.second);
+		Test<size_t>(m.size());
 
 		for (int i = 1; i < 50; i++) {
 			if (i % 2)
@@ -134,7 +134,7 @@ int main() {
 				m.insert(ft::make_pair(i - 10, 'b'));
 		}
 		for (iterator it = m.begin(); it != m.end(); it++) {
-			Test<int>(it->first, true);
+			Test<int>(it->first);
 		}
 	}
 	catch (...) {}
@@ -573,7 +573,7 @@ int main() {
 		m.find(500000);
 
 		it = m.upper_bound(2000000);
-		if (it != m.end()) { Test<int>(it->first, false); }
+		if (it != m.end()) { Test<int>(it->first); }
 		else { Test<std::string>("Not found"); }
 
 		Test<size_t>(m.size());
@@ -585,6 +585,7 @@ int main() {
 	time_test = clock() - start_test;
 	float time_f;
 	time_f = ((float)time_test)/CLOCKS_PER_SEC;
+	ofs << std::endl;
   	ofs << "Time: " << time_f << std::endl;
 
 	ofs.close();

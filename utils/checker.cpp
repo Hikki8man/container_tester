@@ -26,11 +26,11 @@ int main (int ac, char **av) {
 			++i;
 			continue;
 		}
-		if (s1.find("Time: ") != std::string::npos) {
-			ft_t = std::stod(s1.substr(s1.find("Time: ") + 6));
-		}
-		if (s2.find("Time: ") != std::string::npos) {
-			std_t = std::stod(s2.substr(s2.find("Time: ") + 6));
+		if (s1.find("Time: ") != std::string::npos || s2.find("Time: ") != std::string::npos) {
+			if (s1.find("Time: ") != std::string::npos)
+				ft_t = std::stod(s1.substr(s1.find("Time: ") + 6));
+			if (s2.find("Time: ") != std::string::npos)
+				std_t = std::stod(s2.substr(s2.find("Time: ") + 6));
 		}
 		else if (s1 != s2) {
 			if (s1.find("SEGFAULT") != std::string::npos)
@@ -50,11 +50,13 @@ int main (int ac, char **av) {
 	std::cout << std::endl;
 	std::cout << FG_LMAGENTA << "Execution time: " << std::endl;
 	std::cout << FG_DGRAY << "FT: " << FG_WHITE << ft_t << " sec " \
-	<< FG_LMAGENTA << "\\|/" << FG_DGRAY << " STD: " << FG_WHITE << std_t << " sec" << std::endl;
-	if (std_t * 20  < ft_t) {
-		std::cout << FG_RED << "FAILED ! Execution time is 20* > std :(" << std::endl;
-	}
-	else if (failed) {
+	<< FG_LMAGENTA << "\\|/" << FG_DGRAY << " STD: " << FG_WHITE << std_t << " sec ";
+	if (std_t * 20  < ft_t) 
+		std::cout << FG_RED << "\\|/ FAILED ! Execution time is 20* > std :(" << std::endl;
+	else
+		std::cout << FG_GREEN << "\\|/ Good" << std::endl;
+
+	if (failed) {
 		std::cout << FG_RED << "TEST FAILED !!" << FG_WHITE << std::string(" check \"diff_") +  av[1] + ".txt\"" << std::endl;
 		system(std::string("diff " + std::string(av[2]) + " " + std::string(av[3]) + " > diff/diff_" + av[1] + ".txt").c_str());
 	}

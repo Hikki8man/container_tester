@@ -125,6 +125,7 @@ int main (void) {
 	time_test = clock() - start_test;
 	float time_f;
 	time_f = ((float)time_test)/CLOCKS_PER_SEC;
+  	ofs << std::endl;
   	ofs << "Time: " << time_f << std::endl;
 
 	ofs.close();

@@ -8,7 +8,7 @@
 	namespace ft = std;
 	std::ofstream ofs("testOutput/std_stack_out.txt");
 #else
-	#include "../../stack.hpp" // include your stack header file
+	#include "../../stack/stack.hpp" // include your stack header file
 	std::ofstream ofs("testOutput/ft_stack_out.txt");
 
 #endif

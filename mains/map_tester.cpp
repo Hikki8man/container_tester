@@ -10,7 +10,7 @@
 	namespace ft = std;
 	std::ofstream ofs("testOutput/std_map_out.txt");
 #else
-	#include "../..//map.hpp" // include your map header file
+	#include "../../map/map.hpp" // include your map header file
 	std::ofstream ofs("testOutput/ft_map_out.txt");
 
 #endif

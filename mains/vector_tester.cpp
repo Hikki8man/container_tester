@@ -17,7 +17,7 @@
 	namespace ft = std;
 	std::ofstream ofs("testOutput/std_vector_out.txt");
 #else
-	#include "../../vector.hpp" // include your vector header file
+	#include "../../vector/vector.hpp" // include your vector header file
 	std::ofstream ofs("testOutput/ft_vector_out.txt");
 
 #endif

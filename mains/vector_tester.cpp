@@ -162,12 +162,6 @@ int main() {
 	try {
 		ft::vector<int> v;
 		Test<size_t>(v.max_size(), false);
-		// if (v.max_size() == std::distance(v.begin(), v.end())) { // not sure if this is the correct way to test this
-		// 	Test<std::string>("true", false);
-		// }
-		// else {
-		// 	Test<std::string>("false", false);
-		// }
 	}
 	catch(...) {}
 
@@ -414,10 +408,6 @@ int main() {
 		for (size_t i = 0; i < v.size(); i++) {
 			Test<MyTestClass>(v[i], true);
 		}
-		// Test<MyTestClass>(*v.erase(v.end()), true);
-		// for (int i = 0; i < v.size(); i++) {
-		// 	Test<MyTestClass>(v[i], true);
-		// }
 	}
 	catch(...) {}
 
@@ -445,10 +435,8 @@ int main() {
 		for (size_t i = 0; i < v.size(); i++) {
 			Test<MyTestClass>(v[i], true);
 		}
-		// Test<size_t>(v.size(), true);
-		// Test<MyTestClass>(*v.erase(v.end(), v.end()- 1), true);
-		// Test<size_t>(v.size(), true);
-		// Test<size_t>(v.capacity(), true);
+		Test<size_t>(v.size(), true);
+		Test<size_t>(v.capacity(), true);
 	}
 	catch(...) {}
 

@@ -37,9 +37,10 @@ int main() {
 	ofs << "VECTOR TEST";
 	
 
-	// struct timeval time_now;
-	// gettimeofday(&time_now, NULL);
-	// time_t time_start = (time_now.tv_sec * 1000) + (time_now.tv_usec / 1000);
+	clock_t start_test;
+	clock_t time_test;
+	srand(0);
+	start_test = clock();
 
 
 	// test 1: Default constructor
@@ -632,12 +633,12 @@ int main() {
 	}
 	catch(...) {}
 
+	time_test = clock() - start_test;
+	float time_f;
+	time_f = ((float)time_test)/CLOCKS_PER_SEC;
+  	ofs << "Time: " << time_f << std::endl;
+
 	ofs.close();
-
-	// gettimeofday(&time_now, NULL);
-	// time_t time_end = (time_now.tv_sec * 1000) + (time_now.tv_usec / 1000);
-	// std:: cout << "time: " << time_end - time_start << " ms" << std::endl;
-
 
 	return 0;
 }

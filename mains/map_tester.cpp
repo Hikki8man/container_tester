@@ -582,10 +582,10 @@ int main() {
 	}
 	catch(...) {}
 
-	// time_test = clock() - start_test;
-	// float time_f;
-	// time_f = ((float)time_test)/CLOCKS_PER_SEC;
-  	// std::cout << "Time: " << time_f << " sec (" << time_test << " CT.)" << std::endl;
+	time_test = clock() - start_test;
+	float time_f;
+	time_f = ((float)time_test)/CLOCKS_PER_SEC;
+  	ofs << "Time: " << time_f << std::endl;
 
 	ofs.close();
 

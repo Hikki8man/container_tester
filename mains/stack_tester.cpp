@@ -19,6 +19,12 @@
 int nb = 1;
 
 int main (void) {
+
+	clock_t start_test;
+	clock_t time_test;
+	srand(0);
+	start_test = clock();
+
 	{
 		ofs << "STACK TEST" << std::endl;
 		ft::stack<int> a;
@@ -111,6 +117,15 @@ int main (void) {
 		Test<bool>(a >= c);
 		Test<bool>(a == c);
 		Test<bool>(a != c);
+		// Test 30
+		for (int i = 0; i < 10000; ++i) { // need time to test
+			a.push("string " + std::to_string(i + 1));
+		}
 	}
+	time_test = clock() - start_test;
+	float time_f;
+	time_f = ((float)time_test)/CLOCKS_PER_SEC;
+  	ofs << "Time: " << time_f << std::endl;
+
 	ofs.close();
 }

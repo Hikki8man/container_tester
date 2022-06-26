@@ -17,6 +17,7 @@ int main (int ac, char **av) {
 		return (1);
 	}
 	std::string s1, s2;
+	double ft_t, std_t;
 	int i = 0;
 	std::cout << FG_YELLOW << av[1] << " test:" << std::endl;
 	while (getline(f1, s1)) {
@@ -25,7 +26,13 @@ int main (int ac, char **av) {
 			++i;
 			continue;
 		}
-		if (s1 != s2) {
+		if (s1.find("Time: ") != std::string::npos) {
+			ft_t = std::stod(s1.substr(s1.find("Time: ") + 6));
+		}
+		if (s2.find("Time: ") != std::string::npos) {
+			std_t = std::stod(s2.substr(s2.find("Time: ") + 6));
+		}
+		else if (s1 != s2) {
 			if (s1.find("SEGFAULT") != std::string::npos)
 				std::cout << FG_RED << i << ": " << "SIGSEGV ";
 			else
@@ -41,10 +48,15 @@ int main (int ac, char **av) {
 		++i;
 	}
 	std::cout << std::endl;
-	if (failed) {
+	std::cout << FG_LMAGENTA << "Execution time: " << std::endl;
+	std::cout << FG_DGRAY << "FT: " << FG_WHITE << ft_t << " sec " \
+	<< FG_LMAGENTA << "\\|/" << FG_DGRAY << " STD: " << FG_WHITE << std_t << " sec" << std::endl;
+	if (std_t * 20  < ft_t) {
+		std::cout << FG_RED << "FAILED ! Execution time is 20* > std :(" << std::endl;
+	}
+	else if (failed) {
 		std::cout << FG_RED << "TEST FAILED !!" << FG_WHITE << std::string(" check \"diff_") +  av[1] + ".txt\"" << std::endl;
 		system(std::string("diff " + std::string(av[2]) + " " + std::string(av[3]) + " > diff/diff_" + av[1] + ".txt").c_str());
-
 	}
 	else
 		std::cout << FG_GREEN << "TEST PASSED !" << std::endl;

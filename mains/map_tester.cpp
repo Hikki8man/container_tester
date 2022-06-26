@@ -142,10 +142,16 @@ int main() {
 	// Test 4 - insert elements with hint
 	try {
 		ft::map<int, char>m;
-		basic_map(m);
 		iterator it = m.insert(m.begin(), ft::make_pair(15, 'a'));
+		m.clear();
 		Test<int>(it->first, false);
-		Test<bool>(it != m.begin(), true);
+		for (it = m.begin(); it != m.end(); it++) {
+			Test<int>(it->first);
+		}
+		basic_map(m);
+		it = m.insert(m.begin(), ft::make_pair(15, 'a'));
+		Test<int>(it->first);
+		Test<bool>(it != m.begin());
 		it = m.insert(m.end(), ft::make_pair(100, 'a'));
 		Test<bool>(it != m.end(), true);
 		m.insert(m.end(), ft::make_pair(2, 'a'));
@@ -153,9 +159,9 @@ int main() {
 		m.insert(m.find(3), ft::make_pair(13, 'd'));
 		m.insert(m.find(3), ft::make_pair(13, 'd'));
 		for (it = m.begin(); it != m.end(); it++) {
-			Test<int>(it->first, true);
+			Test<int>(it->first);
 		}
-		Test<size_t>(m.size(), true);
+		Test<size_t>(m.size());
 	}
 	catch (...) {}
 

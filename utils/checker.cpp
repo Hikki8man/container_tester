@@ -51,7 +51,7 @@ int main (int ac, char **av) {
 	std::cout << FG_LMAGENTA << "Execution time: " << std::endl;
 	std::cout << FG_DGRAY << "FT: " << FG_WHITE << ft_t << " sec " \
 	<< FG_LMAGENTA << "\\|/" << FG_DGRAY << " STD: " << FG_WHITE << std_t << " sec ";
-	if (std_t * 20  < ft_t) 
+	if (std_t && std_t * 20  < ft_t) 
 		std::cout << FG_RED << "\\|/ FAILED ! Execution time is 20* > std :(" << std::endl;
 	else
 		std::cout << FG_GREEN << "\\|/ Good" << std::endl;

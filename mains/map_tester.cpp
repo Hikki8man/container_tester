@@ -36,25 +36,25 @@ template<class _Tp>
 void basic_map(ft::map<int, char>& map) {
 	try {
 		map.insert(ft::make_pair(8, 'a'));
-		map.insert(ft::make_pair(10, 'b'));
 		map.insert(ft::make_pair(3, 'c'));
 		map.insert(ft::make_pair(1, 'd'));
 		map.insert(ft::make_pair(6, 'e'));
 		map.insert(ft::make_pair(4, 'f'));
 		map.insert(ft::make_pair(7, 'g'));
-		map.insert(ft::make_pair(14, 'h'));
 		map.insert(ft::make_pair(13, 'i'));
+		map.insert(ft::make_pair(10, 'b'));
+		map.insert(ft::make_pair(14, 'h'));
 	}
 	catch(...) {}
 
 	/*
 				8
-		       / \
-	          3   10
-			 / \	 \
-			1   6	  14
-		   	   / \	  /
-		      4   7  13
+		       /  \
+	          3     13
+			 / \    / \
+			1   6 10	14
+		   	   / \	
+		      4   7 
 
 	*/
 }
@@ -263,23 +263,24 @@ int main() {
 	try {
 		ft::map<int, char>m;
 		basic_map(m);
-		m.insert(ft::make_pair(12, 'a'));
 		// erase a node with no childrens
-		iterator it = m.find(12);
+		iterator it = m.find(1);
 		Test<int>(it->first, false);
 		m.erase(it);
 		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);
 		}
 		// erase a node with one child - left
-		it = m.find(14);
+		m.insert(ft::make_pair(2, 'a'));
+		m.insert(ft::make_pair(1, 'a'));
+		it = m.find(2);
 		m.erase(it);
 		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);
 		}
 		// erase a node with one child - right
-		m.insert(ft::make_pair(0, 'a'));
-		it = m.find(0);
+		m.insert(ft::make_pair(2, 'a'));
+		it = m.find(1);
 		m.erase(it);
 		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);

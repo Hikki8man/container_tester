@@ -67,7 +67,7 @@ int main() {
 
 	clock_t start_test;
 	clock_t time_test;
-	srand(0);
+	srand(124);
 	start_test = clock();
 
 
@@ -141,10 +141,11 @@ int main() {
 
 	// Test 4 - insert elements with hint
 	try {
-		ft::map<int, char>m;
-		iterator it = m.insert(m.begin(), ft::make_pair(15, 'a'));
-		m.clear();
+		ft::map<int, char> m;
+		iterator it;
+		it = m.insert(m.begin(), ft::make_pair(15, 'a'));
 		Test<int>(it->first, false);
+		m.clear();
 		for (it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);
 		}
@@ -158,7 +159,7 @@ int main() {
 		m.insert(m.find(14), ft::make_pair(0, 'd'));
 		m.insert(m.find(3), ft::make_pair(13, 'd'));
 		m.insert(m.find(3), ft::make_pair(13, 'd'));
-		for (it = m.begin(); it != m.end(); it++) {
+		for (iterator it = m.begin(); it != m.end(); it++) {
 			Test<int>(it->first);
 		}
 		Test<size_t>(m.size());
@@ -385,6 +386,7 @@ int main() {
 		ft::map<int, char>m;
 		iterator it = m.lower_bound(0);
 		Test<bool>(it == m.end(), false);
+
 		basic_map(m);
 		it = m.lower_bound(0);
 		if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
@@ -405,6 +407,14 @@ int main() {
 		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
 		cit = m.lower_bound(4);
 		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
+
+		for (int i = 0; i < 10000; i++) {
+			m.insert(ft::make_pair(rand(), 'a'));
+		}
+		for (int i = 0; i < 10000; i++) {
+			it = m.lower_bound(rand());
+			if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		}
 	}
 	catch (...) {}
 
@@ -433,6 +443,14 @@ int main() {
 		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
 		cit = m.upper_bound(4);
 		if (cit != m.end()) { Test<int>(cit->first); } else { Test<std::string>("it == end"); }
+
+		for (int i = 0; i < 10000; i++) {
+			m.insert(ft::make_pair(rand(), 'a'));
+		}
+		for (int i = 0; i < 10000; i++) {
+			it = m.upper_bound(rand());
+			if (it != m.end()) { Test<int>(it->first); } else { Test<std::string>("it == end"); }
+		}
 	}
 	catch (...) {}
 
@@ -483,19 +501,19 @@ int main() {
 	// Test 16 - Operator[]
 	try {
 		ft::map<int, char>m;
-		char &a = m[12];
-		m.size();
-		Test<int>(m.begin()->first, false);
-		a = 'g';
+		Test<size_t>(m.size(), false);
+		m[12] = 'g';
+		Test<int>(m.begin()->first);
 		Test<char>(m.begin()->second);
-		m[1];
-		m[0];
-		m[124];
-		m[0];
 		Test<size_t>(m.size());
-		for (iterator it = m.begin(); it != m.end(); ++it) {
-			Test<int>(it->first);
+
+		ft::map<int, int> m2;
+		int sum = 0;
+		for (int i = 0; i < 10000; i++) {
+			int r = rand();
+			sum += m2[r];
 		}
+		Test<int>(sum, true);
 	}
 	catch(...) {}
 
@@ -577,6 +595,12 @@ int main() {
 		else { Test<std::string>("Not found"); }
 
 		Test<size_t>(m.size());
+
+		
+		for (int i = 0; i <= 1500; ++i) {
+			int r = rand();
+			m.lower_bound(r);
+		}
 		m.clear();
 		Test<bool>(m.empty());
 	}

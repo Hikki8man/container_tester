@@ -193,9 +193,9 @@ int main() {
 		Test<int>(v[98], false);
 		int i = v.size() - 1;
 		while (!v.empty()) {
+			Test<int>(v[i], true);
 			v.pop_back();
 			Test<size_t>(v.size(), true);
-			Test<int>(v[i], true);
 			--i;
 		}
 	}
@@ -404,7 +404,12 @@ int main() {
 		for (size_t i = 0; i < v.size(); i++) {
 			Test<MyTestClass>(v[i], true);
 		}
-		Test<MyTestClass>(*v.erase(v.end() - 1), true);
+		ft::vector<MyTestClass>::iterator it = v.erase(v.end() - 1);
+		if (it != v.end()) {
+			Test<MyTestClass>(*it, true);
+		}
+		else
+			Test<std::string>("end()");
 		for (size_t i = 0; i < v.size(); i++) {
 			Test<MyTestClass>(v[i], true);
 		}

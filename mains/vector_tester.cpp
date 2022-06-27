@@ -22,12 +22,13 @@
 
 #endif
 
-int nb = 1;
+int nb = 0;
 
+Test t;
 
 void segfault_handler(int sig) {
 	(void)sig;
-	Test<std::string>("SEGFAULT", false);
+	t.print<std::string>("SEGFAULT");
 	throw std::runtime_error("SEGFAULT");
 }
 
@@ -44,251 +45,268 @@ int main() {
 
 
 	// test 1: Default constructor
+	t.newTest();
 	try {
 		ft::vector<int> v;
-		Test<size_t>(v.capacity(), false);
-		Test<size_t>(v.size(), true);
-		Test<bool>(v.empty(), true);
+		t.print<size_t>(v.capacity());
+		t.print<size_t>(v.size());
+		t.print<bool>(v.empty());
 	}
 	catch(...) {}
 
 	// test 2: Constructor with size and default value
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v(10);
-		Test<size_t>(v.capacity(), false);
-		Test<size_t>(v.size(), true);
-		Test<bool>(v.empty(), true);
+		t.print<size_t>(v.capacity());
+		t.print<size_t>(v.size());
+		t.print<bool>(v.empty());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 3: Constructor with size and value
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v(10, MyTestClass(12));
-		Test<size_t>(v.size(), false);
+		t.print<size_t>(v.size());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 4: Copy constructor
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v(10, MyTestClass(22));
 		v.reserve(20);
 		ft::vector<MyTestClass> v2(v);
-		Test<size_t>(v2.size(), false);
-		Test<size_t>(v2.capacity(), true);
+		t.print<size_t>(v2.size());
+		t.print<size_t>(v2.capacity());
 		for (size_t i = 0; i < v2.size(); i++) {
-			Test<MyTestClass>(v2[i], true);
+			t.print<MyTestClass>(v2[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 5: Operator=
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v(10, MyTestClass(32));
 		ft::vector<MyTestClass> v2;
 		v2 = v;
-		Test<size_t>(v2.size(), false);
+		t.print<size_t>(v2.size());
 		for (size_t i = 0; i < v2.size(); i++) {
-			Test<MyTestClass>(v2[i], true);
+			t.print<MyTestClass>(v2[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 6: Constructor with iterator
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v(10, MyTestClass(42));
 		v.reserve(20);
 		ft::vector<MyTestClass> v2(v.begin(), v.end());
-		Test<size_t>(v2.size(), false);
-		Test<size_t>(v2.capacity(), true);
+		t.print<size_t>(v2.size());
+		t.print<size_t>(v2.capacity());
 		for (size_t i = 0; i < v2.size(); i++) {
-			Test<MyTestClass>(v2[i], true);
+			t.print<MyTestClass>(v2[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 7: Reserve
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		v.reserve(10);
-		Test<size_t>(v.capacity(), false);
+		t.print<size_t>(v.capacity());
 		v.reserve(100);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.capacity());
 		v.reserve(0);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.capacity());
 		v.reserve(v.max_size() + 1);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.capacity());
 	}
-	catch(std::length_error) { Test<std::string>("LENGTH_ERROR", true); }
+	catch(std::length_error) { t.print<std::string>("LENGTH_ERROR"); }
 	catch(...) {}
 
 	// test 8: Resize
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		v.resize(10);
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		v.resize(0);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		v.resize(11);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		v.resize(11, 1);
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		v.resize(99, 42);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 9: Max_size
+	t.newTest();
 	try {
 		ft::vector<int> v;
-		Test<size_t>(v.max_size(), false);
+		t.print<size_t>(v.max_size());
 	}
 	catch(...) {}
 
 
 
 	// test 10: Push_back
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		v.push_back(42);
-		Test<size_t>(v.size(), false);
-		Test<int>(v[0], true);
+		t.print<size_t>(v.size());
+		t.print<int>(v[0]);
 		for (int i = 0; i < 100; i++) {
 			v.push_back(i);
-			Test<size_t>(v.size(), true);
-			Test<int>(v[i], true);
-			Test<size_t>(v.capacity(), true);
+			t.print<size_t>(v.size());
+			t.print<int>(v[i]);
+			t.print<size_t>(v.capacity());
 
 		}
 	}
 	catch(...) {}
 
 	// test 11: Pop_back
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		for (int i = 0; i < 100; i++) {
 			v.push_back(i);
 		}
 		v.pop_back();
-		Test<int>(v[98], false);
+		t.print<int>(v[98]);
 		int i = v.size() - 1;
 		while (!v.empty()) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 			v.pop_back();
-			Test<size_t>(v.size(), true);
+			t.print<size_t>(v.size());
 			--i;
 		}
 	}
 	catch(...) {}
 
 	// test 12: Front
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		for (int i = 0; i < 10; i++) {
 			v.push_back(i);
 		}
-		Test<int>(v.front(), false);
+		t.print<int>(v.front());
 		int & ref = v.front();
 		ref = 42;
-		Test<int>(v.front(), true);
+		t.print<int>(v.front());
 	}
 	catch(...) {}
 
 	// test 13: Back
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		for (int i = 0; i < 10; i++) {
 			v.push_back(i);
 		}
-		Test<int>(v.back(), false);
+		t.print<int>(v.back());
 		int & ref = v.back();
 		ref = 42;
-		Test<int>(v.back(), true);
+		t.print<int>(v.back());
 	}
 	catch(...) {}
 
 	//test 14: At
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		for (int i = 0; i < 10; i++) {
 			v.push_back(i);
 		}
-		Test<int>(v.at(5), false);
+		t.print<int>(v.at(5));
 		int & ref = v.at(5);
 		ref = 42;
-		Test<int>(v.at(5), true);
-		Test<int>(v.at(99), true);
+		t.print<int>(v.at(5));
+		t.print<int>(v.at(99));
 	}
-	catch(std::out_of_range) { Test<std::string>("Out of Range Exeception", true); }
+	catch(std::out_of_range) { t.print<std::string>("Out of Range Exeception"); }
 	catch(...) {}
 
 	// test 15: Clear
+	t.newTest();
 	try {
 		ft::vector<int> v;
 
 		v.clear();
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (int i = 0; i < 100; i++) {
 			v.push_back(i);
 		}
 		v.clear();
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 	}
 	catch(...) {}
 
 	// test 16: Assign nb and val
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		for (int i = 0; i < 10; i++) {
 			v.push_back(i);
 		}
 		v.assign(7, 42);
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (int i = 0; i < 7; i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		v.assign(10, 41);
 		for (int i = 0; i < 10; i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		v.assign(23, 11);
 		for (int i = 0; i < 23; i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		v.assign(0, 0);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 	}
 	catch(...) {}
 
 	// test 17: Assign iterators
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		for (int i = 0; i < 10; i++) {
@@ -299,234 +317,245 @@ int main() {
 			v2.push_back(i + 10);
 		}
 		v.assign(v2.begin(), v2.end());
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (int i = 0; i < 20; i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		v.assign(v2.begin(), v2.begin() + 5);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (int i = 0; i < 5; i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 18: Insert pos and val
+	t.newTest();
 	try {
 		ft::vector<int> v;
 
 		v.insert(v.end(), 42);
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (int i = 0; i < 10; i++) {
-			Test<int>(*v.insert(v.end(), i), true);
+			t.print<int>(*v.insert(v.end(), i));
 		}
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		v.insert(v.begin(), -42);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
-		Test<int>(v[0], true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
+		t.print<int>(v[0]);
 	}
 	catch(...) {}
 
 	// test 19: Insert pos, count and val
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v(20, MyTestClass(42));
 
-		Test<size_t>(v.size(), false);
+		t.print<size_t>(v.size());
 		v.insert(v.end(), 10, MyTestClass(0));
-		Test<size_t>(v.size(), true);
+		t.print<size_t>(v.size());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		v.insert(v.begin(), 10, MyTestClass(0));
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		v.insert(v.begin() + 5, 10, MyTestClass(12));
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 20: Insert iterators
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v;
 		ft::vector<MyTestClass> v2;
 
-		Test<size_t>(v.size(), false);
+		t.print<size_t>(v.size());
 		for (int i = 0; i < 20; i++) {
 			v2.push_back(MyTestClass(i));
 		}
 		v.insert(v.end(), v2.begin(), v2.end());
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		v.insert(v.begin(), v2.begin() + 5, v2.begin() + 10);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		v.insert(v.begin() + 5, v2.begin(), v2.begin() + 5);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 	}
 	catch(...) {}
 	// test 21: Erase pos
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v;
 		for (int i = 0; i < 20; i++) {
 			v.push_back(MyTestClass(i));
 		}
-		Test<size_t>(v.size(), false);
-		Test<MyTestClass>(*v.erase(v.begin()), true);
-		Test<MyTestClass>(v.front(), true);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
-		Test<MyTestClass>(*v.erase(v.begin() + 5), true);
+		t.print<size_t>(v.size());
+		t.print<MyTestClass>(*v.erase(v.begin()));
+		t.print<MyTestClass>(v.front());
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
+		t.print<MyTestClass>(*v.erase(v.begin() + 5));
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		ft::vector<MyTestClass>::iterator it = v.erase(v.end() - 1);
 		if (it != v.end()) {
-			Test<MyTestClass>(*it, true);
+			t.print<MyTestClass>(*it);
 		}
 		else
-			Test<std::string>("end()");
+			t.print<std::string>("end()");
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 22: Erase iterators
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v;
 		for (int i = 0; i < 100; i++) {
 			v.push_back(MyTestClass(i));
 		}
-		Test<size_t>(v.size(), false);
-		Test<MyTestClass>(*v.erase(v.begin(), v.begin() + 5), true);
-		Test<MyTestClass>(v.front(), true);
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<MyTestClass>(*v.erase(v.begin(), v.begin() + 5));
+		t.print<MyTestClass>(v.front());
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 
-		Test<MyTestClass>(*v.erase(v.begin() + 5, v.begin() + 10), true);
+		t.print<MyTestClass>(*v.erase(v.begin() + 5, v.begin() + 10));
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
-		Test<MyTestClass>(*v.erase(v.end() - 10, v.end() - 1), true);
+		t.print<MyTestClass>(*v.erase(v.end() - 10, v.end() - 1));
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
-		Test<MyTestClass>(*v.erase(v.end() - 1, v.end() - 1), true);
+		t.print<MyTestClass>(*v.erase(v.end() - 1, v.end() - 1));
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
-		Test<size_t>(v.size(), true);
-		Test<size_t>(v.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
 	}
 	catch(...) {}
 
 	// test 23: Swap member
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v2(20, MyTestClass(42));
 		ft::vector<MyTestClass> v(70, MyTestClass(21));
 		v.swap(v2);
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
-		Test<size_t>(v2.size(), true);
-		Test<size_t>(v2.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
+		t.print<size_t>(v2.size());
+		t.print<size_t>(v2.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		for (size_t i = 0; i < v2.size(); i++) {
-			Test<MyTestClass>(v2[i], true);
+			t.print<MyTestClass>(v2[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 24: Swap non member
+	t.newTest();
 	try {
 		ft::vector<MyTestClass> v2(20, MyTestClass(42));
 		ft::vector<MyTestClass> v(70, MyTestClass(21));
 		ft::swap(v, v2);
-		Test<size_t>(v.size(), false);
-		Test<size_t>(v.capacity(), true);
-		Test<size_t>(v2.size(), true);
-		Test<size_t>(v2.capacity(), true);
+		t.print<size_t>(v.size());
+		t.print<size_t>(v.capacity());
+		t.print<size_t>(v2.size());
+		t.print<size_t>(v2.capacity());
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<MyTestClass>(v[i], true);
+			t.print<MyTestClass>(v[i]);
 		}
 		for (size_t i = 0; i < v2.size(); i++) {
-			Test<MyTestClass>(v2[i], true);
+			t.print<MyTestClass>(v2[i]);
 		}
 	}
 	catch(...) {}
 
 	// test 25: < operator | <= operator
+	t.newTest();
 	try {
 		ft::vector<int> v1(20, int(42));
 		ft::vector<int> v2(20, int(42));
-		Test<bool>(v1 < v2, false);
-		Test<bool>(v1 <= v2, true);
+		t.print<bool>(v1 < v2);
+		t.print<bool>(v1 <= v2);
 		v2.push_back(int(12));
-		Test<bool>(v1 < v2, true);
-		Test<bool>(v1 <= v2, true);
+		t.print<bool>(v1 < v2);
+		t.print<bool>(v1 <= v2);
 	}
 	catch(...) {}
 
 	// test 26: > operator | >= operator
+	t.newTest();
 	try {
 		ft::vector<int> v1(20, int(42));
 		ft::vector<int> v2(20, int(42));
-		Test<bool>(v1 > v2, false);
-		Test<bool>(v1 >= v2, true);
+		t.print<bool>(v1 > v2);
+		t.print<bool>(v1 >= v2);
 		v1.push_back(int(12));
-		Test<bool>(v1 > v2, true);
-		Test<bool>(v1 >= v2, true);
+		t.print<bool>(v1 > v2);
+		t.print<bool>(v1 >= v2);
 	}
 	catch(...) {}
 
 	// test 27: == operator | != operator
+	t.newTest();
 	try {
 		ft::vector<int> v1(20, int(42));
 		ft::vector<int> v2(20, int(42));
-		Test<bool>(v1 == v2, false);
-		Test<bool>(v1 != v2, true);
+		t.print<bool>(v1 == v2);
+		t.print<bool>(v1 != v2);
 		v1.push_back(int(12));
-		Test<bool>(v1 == v2, true);
-		Test<bool>(v1 != v2, true);
+		t.print<bool>(v1 == v2);
+		t.print<bool>(v1 != v2);
 	}
 	catch(...) {}
 
 	// test 28: get_allocator
+	t.newTest();
 	try {
 		ft::vector<int> v;
 		int *p = v.get_allocator().allocate(10);
 		for (int i = 0; i < 10; i++) {
 			v.get_allocator().construct(p + i, i);
 		}
-		Test<std::string>("oui", false);
+		t.print<std::string>("oui");
 		for (int i = 0; i < 10; i++) {
-			Test<int>(p[i], true);
+			t.print<int>(p[i]);
 			v.get_allocator().destroy(p + i);
 		}
 		v.get_allocator().deallocate(p, 10);
@@ -534,6 +563,7 @@ int main() {
 	catch(...) {}
 
 	// test 29: random access iterator
+	t.newTest();
 	try {
 		ft::vector<int> v;
 
@@ -542,22 +572,23 @@ int main() {
 		}
 		ft::vector<int>::iterator endo = v.end();
 		endo--;
-		Test<int>(*endo, false);
+		t.print<int>(*endo);
 		endo++;
 		for (ft::vector<int>::iterator it = v.begin(); it != endo; it++) {
-			Test<int>(*it, true);
+			t.print<int>(*it);
 			*it = *it + 1;
 		}
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		ft::vector<int>::iterator begindo = v.begin();
-		Test<int>(*(begindo + 50), true);
-		Test<int>(*(endo - 50), true);
+		t.print<int>(*(begindo + 50));
+		t.print<int>(*(endo - 50));
 	}
 	catch(...) {}
 
-	// test 30: const_iterator
+	// Test 30: const_iterator
+	t.newTest();
 	try {
 		ft::vector<int> v;
 
@@ -566,21 +597,22 @@ int main() {
 		}
 		ft::vector<int>::const_iterator endo = v.end();
 		endo--;
-		Test<int>(*endo, false);
+		t.print<int>(*endo);
 		endo++;
 		for (ft::vector<int>::const_iterator it = v.begin(); it != endo; it++) {
-			Test<int>(*it, true);
+			t.print<int>(*it);
 		}
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		ft::vector<int>::const_iterator begindo = v.begin();
-		Test<int>(*(begindo + 50), true);
-		Test<int>(*(endo - 50), true);
+		t.print<int>(*(begindo + 50));
+		t.print<int>(*(endo - 50));
 	}
 	catch(...) {}
 
 	// test 31: reverse iterator
+	t.newTest();
 	try {
 		ft::vector<int> v;
 
@@ -589,21 +621,22 @@ int main() {
 		}
 		ft::vector<int>::reverse_iterator rendo = v.rend();
 		rendo--;
-		Test<int>(*rendo, false);
+		t.print<int>(*rendo);
 		rendo++;
 		for (ft::vector<int>::reverse_iterator it = v.rbegin(); it != rendo; it++) {
-			Test<int>(*it, true);
+			t.print<int>(*it);
 		}
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		ft::vector<int>::reverse_iterator rbegindo = v.rbegin();
-		Test<int>(*(rbegindo + 50), true);
-		Test<int>(*(rendo - 50), true);
+		t.print<int>(*(rbegindo + 50));
+		t.print<int>(*(rendo - 50));
 	}
 	catch(...) {}
 
 	// test 32: const_reverse iterator
+	t.newTest();
 	try {
 		ft::vector<int> v;
 
@@ -612,17 +645,17 @@ int main() {
 		}
 		ft::vector<int>::const_reverse_iterator rendo = v.rend();
 		rendo--;
-		Test<int>(*rendo, false);
+		t.print<int>(*rendo);
 		rendo++;
 		for (ft::vector<int>::const_reverse_iterator it = v.rbegin(); it != rendo; it++) {
-			Test<int>(*it, true);
+			t.print<int>(*it);
 		}
 		for (size_t i = 0; i < v.size(); i++) {
-			Test<int>(v[i], true);
+			t.print<int>(v[i]);
 		}
 		ft::vector<int>::const_reverse_iterator rbegindo = v.rbegin();
-		Test<int>(*(rbegindo + 50), true);
-		Test<int>(*(rendo - 50), true);
+		t.print<int>(*(rbegindo + 50));
+		t.print<int>(*(rendo - 50));
 	}
 	catch(...) {}
 

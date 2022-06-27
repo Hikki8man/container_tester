@@ -28,7 +28,7 @@ CHECKER_SRC = ./utils/checker.cpp
 
 CHECKER_OBJ = $(CHECKER_SRC:.cpp=.o)
 
-CFLAGS	=   -Wall -Werror -Wextra
+CFLAGS	=   #-Wall -Werror -Wextra
 
 CC		=	c++
 

@@ -13,10 +13,11 @@
 
 #endif
 
-
 #include "../utils/color.hpp"
 #include "../utils/Test.hpp"
-int nb = 1;
+int nb = 0;
+
+Test t;
 
 int main (void) {
 
@@ -29,95 +30,125 @@ int main (void) {
 		ofs << "STACK TEST" << std::endl;
 		ft::stack<int> a;
 		// Test 1
-		Test<bool>(a.empty(), false);
+		t.newTest();
+		t.print<bool>(a.empty());
 		// Test 2
+		t.newTest();
 		a.push(1);
-		Test<bool>(a.empty(), false);
+		t.print<bool>(a.empty());
 		// Test 3
-		Test<int>(a.top(), false);
+		t.newTest();
+		t.print<int>(a.top());
 		// Test 4
+		t.newTest();
 		a.pop();
-		Test<bool>(a.empty(), false);
+		t.print<bool>(a.empty());
 		// Test 5
+		t.newTest();
 		for (int i = 0; i < 10; ++i) {
 			a.push(i);
 		}
-		 Test<size_t>(a.size(), false);
+		 t.print<size_t>(a.size());
 		// Test 6
-		Test<int>(a.top(), false);
+		t.newTest();
+		t.print<int>(a.top());
 		// Test 7
+		t.newTest();
 		ft::stack<int> c;
 		for (int i = 0; i < 20; ++i) {
 			c.push(i + 20);
 		}
 		a = c;
-		Test<size_t>(a.size(), false);
+		t.print<size_t>(a.size());
 		// Test 8
-		Test<int>(a.top(), false);
+		t.newTest();
+		t.print<int>(a.top());
 		// Test 9
+		t.newTest();
 		c.pop();
-		Test<bool>(a.top() < c.top(), false);
+		t.print<bool>(a.top() < c.top());
 		// Test 10
-		Test<bool>(a.top() > c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() > c.top());
 		// Test 11
-		Test<bool>(a.top() == c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() == c.top());
 		// Test 12
-		Test<bool>(a.top() != c.top(),false);
+		t.newTest();
+		t.print<bool>(a.top() != c.top());
 		// Test 13
-		Test<bool>(a.top() <= c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() <= c.top());
 		// Test 14
-		Test<bool>(a.top() >= c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() >= c.top());
 	}
 	{
 		ft::stack <std::string, std::list<std::string> > a;
 
 		// Test 15
-		Test<bool>(a.empty(), false);
+		t.newTest();
+		t.print<bool>(a.empty());
 		// Test 16
+		t.newTest();
 		a.push("1");
-		Test<bool>(a.empty(), false);
+		t.print<bool>(a.empty());
 		// Test 17
-		Test<std::string>(a.top(), false);
+		t.newTest();
+		t.print<std::string>(a.top());
 		// Test 18
+		t.newTest();
 		a.pop();
-		Test<bool>(a.empty(), false);
+		t.print<bool>(a.empty());
 		// Test 19
+		t.newTest();
 		for (int i = 0; i < 10; ++i) {
 			a.push("string " + std::to_string(i + 1));
 		}
-		Test<size_t>(a.size(), false);
+		t.print<size_t>(a.size());
 		// Test 20
-		Test<std::string>(a.top(), false);
+		t.newTest();
+		t.print<std::string>(a.top());
 		// Test 21
+		t.newTest();
 		ft::stack<std::string, std::list<std::string> > c;
 		for (int i = 0; i < 20; ++i) {
 			c.push("string " + std::to_string(i + 1));
 		}
 		a = c;
-		Test<size_t>(a.size(), false);
+		t.print<size_t>(a.size());
 		// Test 22
-		Test<std::string>(a.top(), false);
+		t.newTest();
+		t.print<std::string>(a.top());
 		// Test 23
+		t.newTest();
 		c.pop();
-		Test<bool>(a.top() < c.top(), false);
+		t.print<bool>(a.top() < c.top());
 		// Test 24
-		Test<bool>(a.top() > c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() > c.top());
 		// Test 25
-		Test<bool>(a.top() == c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() == c.top());
 		// Test 26
-		Test<bool>(a.top() != c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() != c.top());
 		// Test 27
-		Test<bool>(a.top() <= c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() <= c.top());
 		// Test 28
-		Test<bool>(a.top() >= c.top(), false);
+		t.newTest();
+		t.print<bool>(a.top() >= c.top());
 		// Test 29
-		Test<bool>(a < c, false);
-		Test<bool>(a <= c);
-		Test<bool>(a > c);
-		Test<bool>(a >= c);
-		Test<bool>(a == c);
-		Test<bool>(a != c);
+		t.newTest();
+		t.print<bool>(a < c);
+		t.print<bool>(a <= c);
+		t.print<bool>(a > c);
+		t.print<bool>(a >= c);
+		t.print<bool>(a == c);
+		t.print<bool>(a != c);
 		// Test 30
+		t.newTest();
 		for (int i = 0; i < 10000; ++i) { // need time to test
 			a.push("string " + std::to_string(i + 1));
 		}

@@ -5,22 +5,23 @@
 #include <fstream>
 
 extern std::ofstream ofs;
-extern int nb;
 
 class Test {
 	public:
-		explicit Test() {}
+		explicit Test() : nb(0) {}
 
 		template<typename Type>
 		void print(const Type& t) {
 			ofs << t << " ";
 		}
 
-		static void newTest() {
+		void newTest() {
 			++nb;
 			ofs << std::endl;
 			ofs << "Test " << nb << ": ";
 		}
+		protected:
+			int nb;
 	};
 
 #endif // TEST_HPP

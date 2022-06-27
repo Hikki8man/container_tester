@@ -15,7 +15,6 @@
 
 #include "../utils/color.hpp"
 #include "../utils/Test.hpp"
-int nb = 0;
 
 Test t;
 

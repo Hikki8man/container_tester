@@ -22,8 +22,6 @@
 
 #endif
 
-int nb = 0;
-
 Test t;
 
 void segfault_handler(int sig) {
@@ -132,7 +130,7 @@ int main() {
 		v.reserve(v.max_size() + 1);
 		t.print<size_t>(v.capacity());
 	}
-	catch(std::length_error) { t.print<std::string>("LENGTH_ERROR"); }
+	catch(std::length_error &e) { t.print<std::string>("LENGTH_ERROR"); }
 	catch(...) {}
 
 	// test 8: Resize
@@ -254,7 +252,7 @@ int main() {
 		t.print<int>(v.at(5));
 		t.print<int>(v.at(99));
 	}
-	catch(std::out_of_range) { t.print<std::string>("Out of Range Exeception"); }
+	catch(std::out_of_range& e) { t.print<std::string>("Out of Range Exeception"); }
 	catch(...) {}
 
 	// test 15: Clear
